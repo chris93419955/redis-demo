@@ -34,6 +34,7 @@ public class DemoCtroller {
         for (int i = 0; i < 1; i++) {
             Thread thread = new Thread(() -> {
                 redisService.setNoBlock("k", "v");
+                redisService.setNoBlock2("k2","v2");
             });
             thread.setName("setValueToRedis-" + (i + 1));
             thread.start();
