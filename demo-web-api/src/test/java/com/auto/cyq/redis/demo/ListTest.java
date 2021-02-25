@@ -54,7 +54,7 @@ public class ListTest {
     }
 
     /**
-     *
+     * 获取一个元素，或者一段元素
      */
     @Test
     public void testLRange() {
@@ -69,6 +69,12 @@ public class ListTest {
 
         //取一段，时间复杂度O(n), 由于采用双向链表，所以中间元素的相关操作都是O(n)
         assertEquals(stringRedisTemplate.opsForList().range(listKey, 5, 10), users.subList(5, 11));
+
+        //如果range超过范围，只取到队尾，不会阻塞
+        assertEquals(stringRedisTemplate.opsForList().range(listKey, 5, 100), users.subList(5, 20));
+
+        //lpop,rpop是阻塞命令，如果没有元素会阻塞一直等待，这里注意一下
+        stringRedisTemplate.opsForList().leftPop("emptylist", 4, TimeUnit.SECONDS);
 
         //用完之后删除，不影响其他测试
         stringRedisTemplate.delete(listKey);

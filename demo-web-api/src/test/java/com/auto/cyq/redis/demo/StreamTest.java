@@ -32,7 +32,7 @@ public class StreamTest {
 
 
     /**
-     * 测试添加坐标
+     * 测试生成stream和消费stream
      */
     @Test
     public void testGeoOps() throws InterruptedException {

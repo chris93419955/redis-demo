@@ -82,8 +82,10 @@ public class BitMapTest {
         stringRedisTemplate.opsForValue().setBit("100,000,000", 100000000, true);
         //2yi
         stringRedisTemplate.opsForValue().setBit("200,000,000", 200000000, true);
+        //
+        stringRedisTemplate.opsForValue().setBit("300,000,000", 300000000, true);
 
-        List<String> keys = Arrays.asList("1,000", "10,000", "100,000", "1,000,000", "10,000,000", "100,000,000", "200,000,000");
+        List<String> keys = Arrays.asList("1,000", "10,000", "100,000", "1,000,000", "10,000,000", "100,000,000", "200,000,000", "300,000,000");
         keys.forEach(k -> stringRedisTemplate.expire(k, 5, TimeUnit.MINUTES));
     }
 

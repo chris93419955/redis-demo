@@ -4,7 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -57,8 +61,20 @@ public class GeoTest {
         //离汽车之家1公里内的点
         stringRedisTemplate.opsForGeo().radius(geoKey, "汽车之家", 1000).forEach(e -> System.out.println(e.getContent().getName()));
 
+        Metric metric = RedisGeoCommands.DistanceUnit.KILOMETERS;
+        Distance distance = new Distance(10, metric);
+        Circle circle = new Circle(new Point(116.318432, 39.986112), distance);
+        RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands
+                .GeoRadiusCommandArgs
+                .newGeoRadiusArgs()
+                .includeDistance()
+                .includeCoordinates()
+                .sortAscending()
+                .limit(1000);
         //离汽车之家10公里内的点
-        stringRedisTemplate.opsForGeo().radius(geoKey, "汽车之家", 10000).forEach(e -> System.out.println(e.getContent().getName()));
+        stringRedisTemplate.opsForGeo().radius(geoKey, circle, args).forEach(e -> {
+            System.out.println(e.getContent().getName() + e.getDistance());
+        });
 
         stringRedisTemplate.expire(geoKey, 5, TimeUnit.MINUTES);
 
