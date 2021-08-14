@@ -39,6 +39,9 @@ public class StringTest {
     @Test
     public void testGetSet() {
 
+        String v = stringRedisTemplate.opsForValue().get("nullKey");
+        assertEquals(null, v);
+
         stringRedisTemplate.opsForValue().set("str:test:k1", "1234567890", 5, TimeUnit.MINUTES);
         assertEquals(stringRedisTemplate.opsForValue().get("str:test:k1"), "1234567890");
 

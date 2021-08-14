@@ -46,6 +46,12 @@ public class HashTest {
 
     }
 
+    @Test
+    public void testGet(){
+        Object json = stringRedisTemplate.opsForHash().get("a", "b");
+        assertEquals(json, null);
+    }
+
     /**
      * 批量放值hmset,hmget
      */
