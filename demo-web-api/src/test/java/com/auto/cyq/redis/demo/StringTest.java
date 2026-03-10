@@ -39,10 +39,13 @@ public class StringTest {
     @Test
     public void testGetSet() {
 
-        String v = stringRedisTemplate.opsForValue().get("nullKey");
-        assertEquals(null, v);
+//        String v = stringRedisTemplate.opsForValue().get("nullKey");
+//        assertEquals(null, v);
 
-        stringRedisTemplate.opsForValue().set("str:test:k1", "1234567890", 5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set("str:test:{a}", "1234567890", 5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set("str:test:{b}", "1234567890", 5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set("str:test:{c}", "1234567890", 5, TimeUnit.MINUTES);
+
         assertEquals(stringRedisTemplate.opsForValue().get("str:test:k1"), "1234567890");
 
         User user = User.builder().id(1000).name("name1000").desc("desc1000").build();

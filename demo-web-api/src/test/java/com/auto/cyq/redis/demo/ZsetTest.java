@@ -82,7 +82,7 @@ public class ZsetTest {
         //从多到少输出收到点赞的用户
         System.out.println(stringRedisTemplate.opsForZSet().reverseRange(sortKey, 0, 4).stream().collect(Collectors.toList()));
 
-        stringRedisTemplate.expire(sortKey, 5, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(sortKey, 5, TimeUnit.MILLISECONDS);
 
     }
 
@@ -133,6 +133,13 @@ public class ZsetTest {
         }
         //十万条数据usage是10M
         stringRedisTemplate.opsForZSet().add(usageKey, set);
+
+    }
+
+    @Test
+    public void testT() {
+        long a = 99999999L - Long.parseLong(String.valueOf(System.currentTimeMillis()).substring(5));
+        System.out.println(a);
 
     }
 
